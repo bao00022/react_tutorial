@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script>
+      const root = document.getElementById("root"); // HTMLDivElement
+
+      const ul = document.createElement("ul"); // HTMLUListElement
+
+      const li1 = document.createElement("li"); // HTMLLIElement
+      li1.textContent = "item 1";
+
+      const li2 = document.createElement("li"); // HTMLLIElement
+      li2.textContent = "item 2";
+      li2.className = "active";
+
+      const linkName = "item 3";
+      const linkAddress = "http://abc.com";
+      const li3 = document.createElement("li");
+      li3.innerHTML = `<a href=${linkAddress}>${linkName}</a>`;
+
+      ul.appendChild(li1);
+      ul.appendChild(li2);
+      ul.appendChild(li3);
+
+      root.appendChild(ul);
+
+      console.log(ul);
+    </script>
+  </body>
+</html>

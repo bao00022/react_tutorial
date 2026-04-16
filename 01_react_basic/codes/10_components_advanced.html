@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <style>
+        .app {
+            width: 500px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .input button {
+            padding: 8px 16px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .message {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            gap: 10px;
+        }
+        .message.user {
+            justify-content: end;
+        }
+        .message.bot {
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+           
+        }
+        .message span {
+            background-color: #28a745;
+            color: white;
+            border-radius: 50%;
+            font-size: 36px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+
+        // 从现在开始，我们使用JSX语法来创建React元素，其他配置可以认作标准模板
+
+
+
+        // 组件1
+        function Input() {
+            return (
+                <div className="input">
+                    <input placeholder="请输入您的问题"/>
+                    <button>submit</button>
+                </div>
+            );
+        };
+        // 组件2
+        function ChatMessage({ message, sender }) {
+
+            return (
+                <div className={`message ${sender}`}>
+                    <p>{message}</p>
+                    
+                    {
+                        sender === 'bot' ? (
+                            <span class="material-symbols-outlined">smart_toy</span>
+                        ) : (
+                            <span class="material-symbols-outlined">face</span>
+                        )
+                    }
+                </div>
+            )
+        }
+        
+        // 组件组合
+        const app = (
+            <div className="app">
+                <Input />
+                <ChatMessage message="Hello!" sender="user" />
+                <ChatMessage message="Hello! How are you?" sender="bot" />
+                <ChatMessage message="Fine, thank you, and you?" sender="user" />
+                <ChatMessage message="I am good!" sender="bot" />
+            </div>
+        );
+
+        root.render(app);
+
+    </script>
+    
+</body>
+</html>

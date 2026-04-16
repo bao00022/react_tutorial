@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const root = ReactDOM.createRoot(document.getElementById("root")); // ReactDOMRoot
+
+      const linkName = "item 3";
+      const linkAddress = "http://abc.com";
+
+      const ul = (
+        <ul>
+          <li>item 1</li>
+          <li className="active">item 2</li>
+          <li>
+            <a href={linkAddress}>{linkName}</a>
+          </li>
+        </ul>
+      );
+
+      console.log(ul);
+      // 这里的UL就是JSX写法，一种由facebook发明的JavaScript语法扩展
+      // JSX中可以直接使用JavaScript表达式，用{}包裹
+
+      // 对比test2.html中的ul, 可以看到JSX语法被编译成了React.createElement的形式
+      // 通过babel，可以实现声明式的UI编程，更加直观，并且避免了XSS攻击风险
+      // JSX语法本质上是JavaScript语法的超集，最终会被编译成纯JavaScript代码
+      // JSX就是基于JavaScript的模板语法糖
+
+      root.render(ul);
+    </script>
+  </body>
+</html>

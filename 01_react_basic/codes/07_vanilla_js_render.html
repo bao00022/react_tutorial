@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <button onclick="step1()">原生JS步骤1：初始渲染</button>
+    <button onclick="step2()">原生JS步骤2：添加item 3</button>
+    <button onclick="step3()">原生JS步骤3：添加item 4</button>
+
+    <div id="root"></div>
+
+    <script>
+
+        function renderList(items) {
+            const root = document.getElementById('root');
+
+            root.innerHTML = '';
+            const ul = document.createElement('ul');
+
+            items.forEach(text => {
+                const li = document.createElement('li');
+                li.textContent = text;
+                ul.appendChild(li);
+            });
+            root.appendChild(ul);
+        }
+
+        function step1() {
+            renderList(['item 1', 'item 2']);
+        }
+        function step2() {
+            renderList(['item 1', 'item 2', 'item 3']);
+        }
+        function step3() {
+            renderList(['item 1', 'item 2', 'item 3', 'item 4']);
+        }
+    </script>
+    
+</body>
+</html>

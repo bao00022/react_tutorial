@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+
+    <button onclick="step1()">步骤1：初始渲染</button>
+    <button onclick="step2()">步骤2：添加item 3</button>
+    <button onclick="step3()">步骤3：添加item 4</button>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+
+        function step1() {
+            root.render(<ul><li>item 1</li><li>item 2</li></ul>);
+        }
+        function step2() {
+            root.render(<ul><li>item 1</li><li>item 2</li><li>item 3</li></ul>);
+        }
+        function step3() {
+            root.render(<ul><li>item 1</li><li>item 2</li><li>item 3</li><li>item 4</li></ul>);
+        }
+    </script>
+    
+</body>
+</html>
+
+<!-- 
+这个例子可以说明 React 的“增量更新”或“最小化 DOM 操作”原理。
+
+每次你点击按钮并调用 root.render 渲染新的 React Element 时，React 会比较新旧虚拟DOM（React Element），只对真实 DOM 做必要的、最小的更改（比如只添加新的 li 元素），而不是整个重新生成。
+
+通过这个例子，学生可以直观理解：
+
+React 并不是每次都“重建”全部 DOM，而是只更新有变化的部分。
+这就是 React 高效的原因之一，也是虚拟DOM的核心价值。
+-->

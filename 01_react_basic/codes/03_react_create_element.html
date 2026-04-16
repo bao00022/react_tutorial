@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- react-native -->
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script>
+      const root = ReactDOM.createRoot(document.getElementById("root")); // ReactDOMRoot
+
+      const ul = React.createElement(
+        "ul",
+        null,
+        React.createElement("li", null, "item 1"), // ReactElement
+        React.createElement("li", { className: "active" }, "item 2"), // ReactElement
+        React.createElement("li", { style: { color: "red", backgroundColor: "green" } }, "item 3"), // ReactElement
+        React.createElement(
+          "li",
+          null,
+          React.createElement("a", { href: "http://abc.com" }, "item 4"), // ReactElement
+        ),
+      );
+
+      console.log(ul);
+
+      root.render(ul);
+    </script>
+  </body>
+</html>

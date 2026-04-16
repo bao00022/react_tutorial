@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const element1 = <h2 className="title">Hello, JSX!</h2>;
+
+        const element2 = React.createElement("h2", { className: "title" }, "Hello, JSX!");
+
+        console.log('element1 = ', element1);
+        console.log('element2 = ', element2);
+        // 可以看到element1和element2是一样的
+        // 通过babel，可以实现声明式的UI编程，更加直观
+        // element1是通过JSX语法创建的React元素
+        // element2是通过React.createElement函数创建的React元素
+
+    </script>
+</body>
+</html>

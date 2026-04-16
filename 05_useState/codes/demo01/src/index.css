@@ -1,0 +1,15 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  padding: 16px;
+}
+
+.btns {
+  display: flex;
+  gap: 8px;
+}
