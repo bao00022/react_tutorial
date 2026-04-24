@@ -14,42 +14,42 @@
     <script type="text/babel">
       const root = ReactDOM.createRoot(document.getElementById("root"));
 
-      // 从现在开始，我们使用JSX语法来创建React元素，其他配置可以认作标准模板
-      // 组件1
+      // From here on, we use JSX to create React elements. The rest of the setup can be treated as a standard template.
+      // Component 1
       function Header() {
         return (
           <header>
-            <h1>React 小书</h1>
-            <h2>开源、免费、专业、易用</h2>
+            <h1>React Handbook</h1>
+            <h2>Open source, free, professional, and easy to use</h2>
           </header>
         );
       }
-      // 组件2
+      // Component 2
       function Main({ name }) {
         return (
           <main>
-            <p>学会 {name} ，离改变世界只差一个你。</p>
-            <input placeholder="输入你的想法" />
-            <button>提交</button>
+            <p>Master {name} and you are one step closer to changing the world.</p>
+            <input placeholder="Type your thoughts" />
+            <button>Submit</button>
           </main>
         );
       }
 
-      // 组件组合 - 展示JSX语法糖的本质
+      // Component composition - demonstrates the true nature of JSX syntactic sugar
       const app = (
         <div>
           <Header />
 
-          {/* JSX 语法糖 - 看起来像HTML属性，实际是对象 */}
+          {/* JSX syntax sugar - looks like HTML attributes, but is actually an object */}
           <Main name="react" />
 
-          {/* 直接调用函数 - 暴露了对象的真实结构 */}
+          {/* Direct function call - reveals the actual object structure */}
           {Main({ name: "JavaScript" })}
 
-          {/* 
-                上面的JSX实际上等价于：
+          {/*
+                The JSX above is equivalent to:
                 React.createElement(Main, { name: "react" }, null)
-                所以 name="react" 最终变成了对象 { name: "react" }
+                So name="react" ultimately becomes the object { name: "react" }
                 */}
         </div>
       );

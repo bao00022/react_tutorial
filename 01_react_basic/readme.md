@@ -1,28 +1,28 @@
-[← 返回首页](../readme.md)
+[← Back to Home](../readme.md)
 
-# 第一章 - React 入门基础
+# Chapter 1 - React Basics
 
-本章通过一系列对比示例，从零开始理解 React 的核心思路。所有示例均直接在 HTML 中通过 CDN 引入 React，无需任何构建工具。
+This chapter uses a series of comparative examples to build an understanding of React's core ideas from scratch. All examples load React directly via CDN in plain HTML — no build tools required.
 
-## 目录
+## Table of Contents
 
-1. [目标：一个静态列表](#1-目标一个静态列表)
-2. [原生 JS 操作 DOM](#2-原生-js-操作-dom)
-3. [用 React.createElement 创建元素](#3-用-reactcreateelement-创建元素)
-4. [JSX：让代码更像 HTML](#4-jsx让代码更像-html)
-5. [JSX 与 createElement 的等价关系](#5-jsx-与-createelement-的等价关系)
-6. [React 标准模板](#6-react-标准模板)
-7. [渲染对比：原生 JS vs React 虚拟 DOM](#7-渲染对比原生-js-vs-react-虚拟-dom)
-8. [React 组件初探](#8-react-组件初探)
-9. [React 组件进阶：Props 与组件复用](#9-react-组件进阶props-与组件复用)
+1. [Goal: A Static List](#1-goal-a-static-list)
+2. [Vanilla JS DOM Manipulation](#2-vanilla-js-dom-manipulation)
+3. [Creating Elements with React.createElement](#3-creating-elements-with-reactcreateelement)
+4. [JSX: Making Code Look More Like HTML](#4-jsx-making-code-look-more-like-html)
+5. [JSX and createElement Are Equivalent](#5-jsx-and-createelement-are-equivalent)
+6. [The Standard React Template](#6-the-standard-react-template)
+7. [Rendering Comparison: Vanilla JS vs React Virtual DOM](#7-rendering-comparison-vanilla-js-vs-react-virtual-dom)
+8. [Introduction to React Components](#8-introduction-to-react-components)
+9. [Advanced Components: Props and Reuse](#9-advanced-components-props-and-reuse)
 
 ---
 
-## 1. 目标：一个静态列表
+## 1. Goal: A Static List
 
-> 示例代码：[codes/01_static_list.html](codes/01_static_list.html)
+> Example code: [codes/01_static_list.html](codes/01_static_list.html)
 
-我们从一个最简单的目标开始——渲染下面这个列表：
+We start with the simplest possible goal — render the following list:
 
 ```html
 <ul>
@@ -32,15 +32,15 @@
 </ul>
 ```
 
-这段 HTML 直接写死在页面里。接下来的几节，我们会用不同的方式来"动态"生成它，看看原生 JS 和 React 各是怎么做的。
+This HTML is hardcoded directly in the page. Over the next few sections, we will generate it "dynamically" using different approaches, and compare how vanilla JS and React each handle it.
 
 ---
 
-## 2. 原生 JS 操作 DOM
+## 2. Vanilla JS DOM Manipulation
 
-> 示例代码：[codes/02_vanilla_js_dom.html](codes/02_vanilla_js_dom.html)
+> Example code: [codes/02_vanilla_js_dom.html](codes/02_vanilla_js_dom.html)
 
-用原生 JS 创建同样的列表，需要一步步手动操作 DOM：
+Creating the same list with vanilla JS requires manually manipulating the DOM step by step:
 
 ```js
 const root = document.getElementById("root");
@@ -63,24 +63,24 @@ ul.appendChild(li3);
 root.appendChild(ul);
 ```
 
-**问题在哪？**
+**What's the problem?**
 
-代码是"命令式"的——你需要告诉浏览器**怎么做**（先创建元素，再设置属性，再一个个挂载）。当 UI 结构复杂时，这类代码会迅速变得难以维护。
+The code is *imperative* — you have to tell the browser **how** to do everything (create each element, set its attributes, mount them one by one). As UI structure grows more complex, this kind of code quickly becomes hard to maintain.
 
 ---
 
-## 3. 用 React.createElement 创建元素
+## 3. Creating Elements with React.createElement
 
-> 示例代码：[codes/03_react_create_element.html](codes/03_react_create_element.html)
+> Example code: [codes/03_react_create_element.html](codes/03_react_create_element.html)
 
-在 HTML 中引入 React CDN：
+Include React via CDN in the HTML:
 
 ```html
 <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 ```
 
-React 提供了 `React.createElement` 来创建**虚拟 DOM 元素**（React Element），再通过 `ReactDOM.createRoot` + `render` 挂载到真实 DOM：
+React provides `React.createElement` to create **virtual DOM elements** (React Elements), which are then mounted to the real DOM via `ReactDOM.createRoot` + `render`:
 
 ```js
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -97,37 +97,37 @@ const ul = React.createElement(
 root.render(ul);
 ```
 
-**`React.createElement` 的参数：**
+**`React.createElement` parameters:**
 
 ```
 React.createElement(type, props, ...children)
 ```
 
-| 参数          | 说明                                                    |
-| ------------- | ------------------------------------------------------- |
-| `type`        | 元素类型，如 `"ul"`、`"li"`，或组件函数                 |
-| `props`       | 属性对象，如 `{ className: "active" }`，无属性传 `null` |
-| `...children` | 子元素，可以是字符串或其他 React Element                |
+| Parameter     | Description                                                          |
+| ------------- | -------------------------------------------------------------------- |
+| `type`        | Element type, e.g. `"ul"`, `"li"`, or a component function          |
+| `props`       | Props object, e.g. `{ className: "active" }`, or `null` if none     |
+| `...children` | Child elements — strings or other React Elements                     |
 
-**注意：** 这里用的是 `className` 而不是 `class`，因为 `class` 是 JavaScript 的保留字。
+**Note:** Use `className` instead of `class`, because `class` is a reserved keyword in JavaScript.
 
-`React.createElement` 返回的是一个普通 JS 对象（React Element），React 会用它来描述要渲染什么，并不直接操作真实 DOM。
+`React.createElement` returns a plain JS object (a React Element). React uses it to describe what should be rendered — it does not directly touch the real DOM.
 
 ---
 
-## 4. JSX：让代码更像 HTML
+## 4. JSX: Making Code Look More Like HTML
 
-> 示例代码：[codes/04_jsx.html](codes/04_jsx.html)
+> Example code: [codes/04_jsx.html](codes/04_jsx.html)
 
-`React.createElement` 的写法太繁琐了，嵌套一深就难以阅读。为此，React 引入了 **JSX**。
+`React.createElement` is verbose and hard to read when deeply nested. To address this, React introduced **JSX**.
 
-额外引入 Babel，让浏览器能直接解析 JSX：
+Include Babel so the browser can parse JSX directly:
 
 ```html
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 ```
 
-脚本标签需要加上 `type="text/babel"`：
+The script tag needs `type="text/babel"`:
 
 ```html
 <script type="text/babel">
@@ -150,22 +150,22 @@ React.createElement(type, props, ...children)
 </script>
 ```
 
-**JSX 的几个要点：**
+**Key points about JSX:**
 
-- JSX 看起来像 HTML，但本质是 **JavaScript 语法扩展**，由 Babel 编译成 `React.createElement` 调用
-- 用 `{}` 嵌入任意 **JavaScript 表达式**，如变量、运算、函数调用
-- 属性名用驼峰命名，如 `className`、`onClick`、`backgroundColor`
-- JSX 是**声明式**的——你描述 UI **长什么样**，而不是**怎么构建**
+- JSX looks like HTML, but it is a **JavaScript syntax extension** — Babel compiles it into `React.createElement` calls
+- Use `{}` to embed any **JavaScript expression**: variables, operations, function calls
+- Attribute names use camelCase: `className`, `onClick`, `backgroundColor`
+- JSX is **declarative** — you describe what the UI **looks like**, not **how to build it**
 
-> **JSX 只是语法糖**，Babel 会把 JSX 编译回 `React.createElement`，两者最终产生完全相同的结果。
+> **JSX is just syntactic sugar.** Babel compiles JSX back to `React.createElement`, and both produce exactly the same result.
 
 ---
 
-## 5. JSX 与 createElement 的等价关系
+## 5. JSX and createElement Are Equivalent
 
-> 示例代码：[codes/05_jsx_vs_create_element.html](codes/05_jsx_vs_create_element.html)
+> Example code: [codes/05_jsx_vs_create_element.html](codes/05_jsx_vs_create_element.html)
 
-在浏览器控制台中可以直接验证这一点：
+You can verify this directly in the browser console:
 
 ```js
 const element1 = <h2 className="title">Hello, JSX!</h2>;
@@ -174,10 +174,10 @@ const element2 = React.createElement("h2", { className: "title" }, "Hello, JSX!"
 
 console.log("element1 = ", element1);
 console.log("element2 = ", element2);
-// 两者打印出来完全一样
+// Both print identical output
 ```
 
-两者打印出来的都是相同的 React Element 对象，结构大致如下：
+Both produce the same React Element object, roughly structured as:
 
 ```js
 {
@@ -190,15 +190,15 @@ console.log("element2 = ", element2);
 }
 ```
 
-**结论：** JSX 就是 `React.createElement` 的语法糖，让代码更易读、更易写。日常开发中几乎只用 JSX，`React.createElement` 是 JSX 编译后的底层实现。
+**Conclusion:** JSX is syntactic sugar for `React.createElement` — it makes code easier to read and write. In practice you will almost always use JSX; `React.createElement` is what JSX compiles down to under the hood.
 
 ---
 
-## 6. React 标准模板
+## 6. The Standard React Template
 
-> 示例代码：[codes/06_react_template.html](codes/06_react_template.html)
+> Example code: [codes/06_react_template.html](codes/06_react_template.html)
 
-一个完整的 React CDN 入门模板如下：
+A complete React CDN starter template looks like this:
 
 ```html
 <!DOCTYPE html>
@@ -207,54 +207,54 @@ console.log("element2 = ", element2);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>React App</title>
-    <!-- 1. 引入 React 和 ReactDOM -->
+    <!-- 1. Include React and ReactDOM -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <!-- 2. 引入 Babel，让浏览器支持 JSX -->
+    <!-- 2. Include Babel to enable JSX in the browser -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
-    <!-- 3. React 渲染的挂载点 -->
+    <!-- 3. Mount point for React -->
     <div id="root"></div>
 
-    <!-- 4. 脚本类型设为 text/babel -->
+    <!-- 4. Set the script type to text/babel -->
     <script type="text/babel">
-      // 5. 创建 React 根节点
+      // 5. Create the React root
       const root = ReactDOM.createRoot(document.getElementById("root"));
 
-      // 6. 用 JSX 编写 UI
+      // 6. Write the UI with JSX
       const app = (
         <div>
-          <h1>React 小书</h1>
-          <p>学会 React，离改变世界只差一个你。</p>
+          <h1>React Handbook</h1>
+          <p>Master React, and you are one step closer to changing the world.</p>
         </div>
       );
 
-      // 7. 渲染到页面
+      // 7. Render to the page
       root.render(app);
     </script>
   </body>
 </html>
 ```
 
-这 7 个步骤就是所有 React CDN 示例的固定结构，后续示例都在第 6 步的 JSX 部分展开。
+These 7 steps form the fixed structure for all React CDN examples. Everything in later examples builds on step 6 — the JSX section.
 
 ---
 
-## 7. 渲染对比：原生 JS vs React 虚拟 DOM
+## 7. Rendering Comparison: Vanilla JS vs React Virtual DOM
 
-> 示例代码：[codes/07_vanilla_js_render.html](codes/07_vanilla_js_render.html) | [codes/08_react_render.html](codes/08_react_render.html)
+> Example code: [codes/07_vanilla_js_render.html](codes/07_vanilla_js_render.html) | [codes/08_react_render.html](codes/08_react_render.html)
 
-这两个示例通过按钮演示了一个关键区别：**React 只更新变化的 DOM 节点，而不是重建整个 DOM**。
+These two examples use buttons to demonstrate a key difference: **React only updates changed DOM nodes, rather than rebuilding the entire DOM.**
 
-### 原生 JS 的做法
+### Vanilla JS approach
 
-每次点击按钮，都用 `innerHTML = ''` 清空整个列表，再重新创建所有节点：
+Each button click wipes the entire list with `innerHTML = ''` and recreates every node from scratch:
 
 ```js
 function renderList(items) {
   const root = document.getElementById("root");
-  root.innerHTML = ""; // 清空全部
+  root.innerHTML = ""; // clear everything
   const ul = document.createElement("ul");
   items.forEach((text) => {
     const li = document.createElement("li");
@@ -275,11 +275,11 @@ function step3() {
 }
 ```
 
-即使只是添加一个 `<li>`，也会销毁并重建所有 `<li>`。
+Even when adding just one `<li>`, all existing `<li>` elements are destroyed and recreated.
 
-### React 的做法
+### React approach
 
-每次点击按钮，调用 `root.render` 传入新的 JSX：
+Each button click calls `root.render` with updated JSX:
 
 ```js
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -313,39 +313,39 @@ function step3() {
 }
 ```
 
-**用浏览器开发者工具观察：** 每次 `step2` 或 `step3`，只有新增的 `<li>` 会闪烁高亮，原有的节点纹丝不动。
+**Watch in browser DevTools:** when `step2` or `step3` runs, only the newly added `<li>` flashes to indicate a DOM update. Existing nodes remain untouched.
 
-### 为什么 React 更高效？
+### Why is React more efficient?
 
-React 在内存中维护一棵**虚拟 DOM 树**（Virtual DOM）。每次 `render` 时，React 会：
+React maintains a **Virtual DOM tree** in memory. Each time `render` is called, React:
 
-1. 用新的 JSX 构建一棵新的虚拟 DOM 树
-2. 将新树与旧树进行**diff（差异对比）**
-3. 只把差异部分同步到真实 DOM
+1. Builds a new virtual DOM tree from the new JSX
+2. **Diffs** the new tree against the previous tree
+3. Syncs only the differences to the real DOM
 
-这一过程叫做 **Reconciliation（协调）**，是 React 高效渲染的核心机制。
+This process is called **Reconciliation** and is the core mechanism behind React's efficient rendering.
 
 ---
 
-## 8. React 组件初探
+## 8. Introduction to React Components
 
-> 示例代码：[codes/09_components_basic.html](codes/09_components_basic.html)
+> Example code: [codes/09_components_basic.html](codes/09_components_basic.html)
 
-到目前为止，我们都是把 JSX 存到变量里，整个 UI 写在一起。当页面复杂时，这同样会变得难以维护。
+So far, we have stored JSX in variables and written all UI in one place. As pages grow more complex, this becomes just as hard to maintain.
 
-**组件**是 React 的核心抽象：把 UI 拆分成独立的、可复用的小块，每块就是一个**组件**。
+**Components** are React's core abstraction: break the UI into independent, reusable pieces — each piece is a **component**.
 
-### 定义组件
+### Defining a component
 
-React 中最简单的组件就是一个**返回 JSX 的函数**（函数组件）：
+The simplest React component is a **function that returns JSX** (a function component):
 
 ```js
-// 组件名必须大写字母开头
+// Component names must start with a capital letter
 function Header() {
   return (
     <header>
-      <h1>React 小书</h1>
-      <h2>开源、免费、专业、易用</h2>
+      <h1>React Handbook</h1>
+      <h2>Open source, free, professional, and easy to use</h2>
     </header>
   );
 }
@@ -353,17 +353,17 @@ function Header() {
 function Main({ name }) {
   return (
     <main>
-      <p>学会 {name}，离改变世界只差一个你。</p>
-      <input placeholder="输入你的想法" />
-      <button>提交</button>
+      <p>Master {name} and you are one step closer to changing the world.</p>
+      <input placeholder="Type your thoughts" />
+      <button>Submit</button>
     </main>
   );
 }
 ```
 
-### 使用组件（组件组合）
+### Using components (component composition)
 
-组件可以像 HTML 标签一样在 JSX 中使用：
+Components can be used in JSX just like HTML tags:
 
 ```js
 const app = (
@@ -376,68 +376,68 @@ const app = (
 root.render(app);
 ```
 
-### Props：向组件传递数据
+### Props: passing data to components
 
-`name="React"` 看起来像 HTML 属性，实际上 Babel 会把它编译成一个对象传给组件函数：
+`name="React"` looks like an HTML attribute, but Babel compiles it into an object passed to the component function:
 
 ```js
-// JSX 写法
+// JSX syntax
 <Main name="React" />;
 
-// 等价于
+// Equivalent to
 React.createElement(Main, { name: "React" }, null);
 
-// Main 函数实际接收的参数
+// What Main actually receives
 Main({ name: "React" });
 ```
 
-所以 `{ name }` 只是对 `props` 对象的解构：
+So `{ name }` is simply destructuring the `props` object:
 
 ```js
 function Main({ name }) {
-  // 等同于 function Main(props) { const name = props.name; ... }
-  return <p>学会 {name}</p>;
+  // equivalent to: function Main(props) { const name = props.name; ... }
+  return <p>Master {name}</p>;
 }
 ```
 
-### 两种调用方式的对比
+### Two ways to call a component
 
 ```js
-// 方式一：JSX 标签（推荐）
+// Method 1: JSX tag (recommended)
 <Main name="React" />;
 
-// 方式二：直接调用函数（不推荐，但能暴露本质）
+// Method 2: direct function call (not recommended, but reveals the underlying mechanics)
 {
   Main({ name: "JavaScript" });
 }
 ```
 
-两种方式渲染结果相同，但 React 推荐始终用 JSX 标签形式，因为只有这样 React 才能正确地追踪组件生命周期和进行协调优化。
+Both produce the same rendered output, but React strongly recommends always using the JSX tag form — only then can React correctly track component lifecycle and apply reconciliation optimizations.
 
 ---
 
-## 9. React 组件进阶：Props 与组件复用
+## 9. Advanced Components: Props and Reuse
 
-> 示例代码：[codes/10_components_advanced.html](codes/10_components_advanced.html)
+> Example code: [codes/10_components_advanced.html](codes/10_components_advanced.html)
 
-这个示例用组件搭建了一个简单的聊天界面，展示了**组件复用**和**条件渲染**。
+This example builds a simple chat interface with components to demonstrate **component reuse** and **conditional rendering**.
 
-### 输入框组件
+### Input component
 
 ```js
 function Input() {
   return (
     <div className="input">
-      <input placeholder="请输入您的问题" />
+      <input placeholder="Type your question" />
       <button>submit</button>
     </div>
   );
 }
 ```
 
-### 消息气泡组件
+### Chat message component
 
-`ChatMessage` 接收 `message`（消息内容）和 `sender`（发送方：`"user"` 或 `"bot"`），根据 `sender` 决定样式和图标：
+`ChatMessage` receives `message` (the message text) and `sender` (`"user"` or `"bot"`), and uses `sender` to determine the style and icon:
 
 ```js
 function ChatMessage({ message, sender }) {
@@ -454,12 +454,12 @@ function ChatMessage({ message, sender }) {
 }
 ```
 
-**这里用到了两个重要的 JSX 技巧：**
+**Two important JSX techniques used here:**
 
-1. **动态 className**：``className={`message ${sender}`}`` 用模板字符串根据 `sender` 拼接 class 名
-2. **条件渲染**：`{condition ? <A /> : <B />}` 用三元表达式在 JSX 中根据条件渲染不同内容
+1. **Dynamic className**: `` className={`message ${sender}`} `` uses a template literal to compose the class name based on `sender`
+2. **Conditional rendering**: `{condition ? <A /> : <B />}` uses a ternary expression inside JSX to render different content based on a condition
 
-### 组件组合（复用）
+### Component composition (reuse)
 
 ```js
 const app = (
@@ -473,17 +473,17 @@ const app = (
 );
 ```
 
-同一个 `ChatMessage` 组件，通过传入不同的 props，渲染出不同样式的消息气泡。这正是组件**复用**的核心价值。
+The same `ChatMessage` component renders differently styled message bubbles simply by receiving different props. This is the core value of component **reuse**.
 
 ---
 
-## 小结
+## Summary
 
-| 概念              | 要点                                                               |
-| ----------------- | ------------------------------------------------------------------ |
-| **React Element** | 由 `React.createElement` 或 JSX 创建的普通 JS 对象，描述 UI 的结构 |
-| **JSX**           | JavaScript 的语法扩展，被 Babel 编译成 `React.createElement` 调用  |
-| **虚拟 DOM**      | React 在内存中维护的 UI 描述树，渲染时只将差异同步到真实 DOM       |
-| **组件**          | 返回 JSX 的函数，是 React 的基本构建单元，名称以大写字母开头       |
-| **Props**         | 组件的输入参数，JSX 中的属性会被编译成一个对象传给组件函数         |
-| **条件渲染**      | 在 JSX 的 `{}` 中用三元表达式或 `&&` 控制渲染内容                  |
+| Concept           | Key Points                                                                           |
+| ----------------- | ------------------------------------------------------------------------------------ |
+| **React Element** | A plain JS object created by `React.createElement` or JSX that describes UI structure |
+| **JSX**           | A JavaScript syntax extension compiled by Babel into `React.createElement` calls     |
+| **Virtual DOM**   | React's in-memory UI description tree — only diffs are synced to the real DOM        |
+| **Component**     | A function that returns JSX; React's basic building block; name must start uppercase |
+| **Props**         | A component's input parameters; JSX attributes are compiled into an object           |
+| **Conditional rendering** | Use ternary expressions or `&&` inside JSX `{}` to control rendered content  |

@@ -28,13 +28,13 @@
       );
 
       console.log(ul);
-      // 这里的UL就是JSX写法，一种由facebook发明的JavaScript语法扩展
-      // JSX中可以直接使用JavaScript表达式，用{}包裹
+      // The ul above is written in JSX — a JavaScript syntax extension invented by Facebook
+      // Inside JSX you can embed any JavaScript expression by wrapping it in {}
 
-      // 对比test2.html中的ul, 可以看到JSX语法被编译成了React.createElement的形式
-      // 通过babel，可以实现声明式的UI编程，更加直观，并且避免了XSS攻击风险
-      // JSX语法本质上是JavaScript语法的超集，最终会被编译成纯JavaScript代码
-      // JSX就是基于JavaScript的模板语法糖
+      // Compare with the ul in 03_react_create_element.html: JSX compiles into React.createElement calls
+      // With Babel, we can write declarative UI that is more readable and avoids XSS risks
+      // JSX is a superset of JavaScript syntax and ultimately compiles to plain JavaScript
+      // JSX is syntactic sugar built on top of JavaScript
 
       root.render(ul);
     </script>

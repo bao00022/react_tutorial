@@ -67,20 +67,20 @@
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
 
-        // 从现在开始，我们使用JSX语法来创建React元素，其他配置可以认作标准模板
+        // From here on, we use JSX to create React elements. The rest of the setup can be treated as a standard template.
 
 
 
-        // 组件1
+        // Component 1
         function Input() {
             return (
                 <div className="input">
-                    <input placeholder="请输入您的问题"/>
+                    <input placeholder="Type your question"/>
                     <button>submit</button>
                 </div>
             );
         };
-        // 组件2
+        // Component 2
         function ChatMessage({ message, sender }) {
 
             return (
@@ -98,7 +98,7 @@
             )
         }
         
-        // 组件组合
+        // Component composition
         const app = (
             <div className="app">
                 <Input />

@@ -10,9 +10,9 @@
 </head>
 <body>
 
-    <button onclick="step1()">步骤1：初始渲染</button>
-    <button onclick="step2()">步骤2：添加item 3</button>
-    <button onclick="step3()">步骤3：添加item 4</button>
+    <button onclick="step1()">Step 1: Initial render</button>
+    <button onclick="step2()">Step 2: Add item 3</button>
+    <button onclick="step3()">Step 3: Add item 4</button>
 
     <div id="root"></div>
 
@@ -34,13 +34,13 @@
 </body>
 </html>
 
-<!-- 
-这个例子可以说明 React 的“增量更新”或“最小化 DOM 操作”原理。
+<!--
+This example demonstrates React's “incremental update” or “minimal DOM operations” principle.
 
-每次你点击按钮并调用 root.render 渲染新的 React Element 时，React 会比较新旧虚拟DOM（React Element），只对真实 DOM 做必要的、最小的更改（比如只添加新的 li 元素），而不是整个重新生成。
+Each time you click a button and call root.render with a new React Element, React compares the new and old virtual DOM trees and makes only the necessary, minimal changes to the real DOM (e.g. only appending the new li element) rather than regenerating everything from scratch.
 
-通过这个例子，学生可以直观理解：
+Through this example, you can intuitively understand:
 
-React 并不是每次都“重建”全部 DOM，而是只更新有变化的部分。
-这就是 React 高效的原因之一，也是虚拟DOM的核心价值。
+React does not “rebuild” the entire DOM on every render — it only updates the parts that changed.
+This is one reason React is efficient, and it is the core value of the virtual DOM.
 -->
